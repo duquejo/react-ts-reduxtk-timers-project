@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	h1 {
+		@apply text-4xl font-semibold mb-2;
+	}
+	h2 {
+		@apply text-2xl font-normal mb-2;
+	}
+
+	button {
+		@apply px-3 py-2 mx-1 transition-colors duration-300 bg-slate-900 hover:bg-slate-700 rounded text-xs font-semibold first:ml-0 last:mr-0 drop-shadow-lg;
+	}
+}
+
+@layer components {
+	
+	/** Gold **/
+	.gold__span {
+		@apply rounded font-bold px-4 py-2 bg-slate-700 text-xl mx-3 last:mr-0 text-white/80;
+	}
+
+	.gold__block{
+		@apply block mt-5 text-base;
+	}
+
+	.gold__title {
+		@apply text-center;
+	}
+
+	/** Item **/
+	.item__span {
+		@apply block;
+	}
+
+	/** Timers **/
+	.timers__title {
+		@apply mb-4;
+	}
+
+	.timers__block {
+		@apply mx-auto;
+	}
+
+	.timers__new-timer{
+		@apply flex flex-row justify-center;
+		button {
+			@apply ml-2;
+		}
+		.input__container {
+			@apply flex drop-shadow-md;
+			input{
+				@apply rounded-tl rounded-bl text-slate-900 pl-2;
+			}
+			.caret {
+				@apply bg-gray-400 px-3 py-2 text-xs rounded-tr rounded-br;
+			}
+		}
+	}
+
+	.timers__current-timers-bar {
+		@apply my-5;
+	}
+
+	.timers__current-timers-control {
+		> ul li {
+			@apply first:mt-4 my-2 last:mb-0 pt-2 border-t;
+			span {
+				@apply mr-1 text-base font-semibold;
+			}
+		}
+	}
+
+	.timers__debugger {
+		@apply bg-slate-600 rounded p-2;
+		code {
+			@apply text-xs;
+		}
+	}
+
+	/** Bar **/
+	.bar__block-outer {
+		@apply w-full bg-gray-200 rounded-full dark:bg-gray-700 first:mt-0 my-2 last:mb-0;
+	}
+
+	.bar__block-inner {
+		@apply bg-blue-500 text-xs font-bold text-center p-0.5 leading-none rounded-full transition-all whitespace-nowrap;
+	}
+}
