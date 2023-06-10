@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { useAppDispatch } from '../hooks/hooks';
 import { upgrade } from '../slices/gold';
+import { formatGold } from '../utils/progressUtils';
 
 interface IItemProps {
 	name: string;
@@ -28,7 +29,7 @@ export const Item: FC<IItemProps> = ({
 		<div title={`Profit: ${profit}`}>
 			<button onClick={handleOnClickBuy}>
 				{name}
-				<span className="item__span">{`($${cost})`}</span>
+				<span className="item__span">{`($${formatGold(cost, true)})`}</span>
 			</button>
 		</div>
 	);

@@ -10,7 +10,7 @@ import {
 	selectCount,
 } from '../slices/counter';
 
-export const Counter: FC<any> = () => {
+export const Counter: FC = () => {
 	const count = useAppSelector(selectCount);
 	const dispatch = useAppDispatch();
 	const [incrementAmount, setIncrementAmount] = useState('2');

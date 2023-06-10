@@ -1,5 +1,8 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import timerReducer, { incrementWithActiveCondition, updateTimer } from '../slices/timer';
+import timerReducer, {
+	incrementWithActiveCondition,
+	updateTimer,
+} from '../slices/timer';
 import goldReducer, { increment } from '../slices/gold';
 import counterReducer from '../slices/counter';
 
@@ -21,7 +24,7 @@ setInterval(() => {
 	// Gold per Second
 	store.dispatch(increment(base));
 	// Bonus handling
-	store.dispatch(incrementWithActiveCondition(deltaTime));
+	store.dispatch(incrementWithActiveCondition());
 	// Time handlers
 	store.dispatch(updateTimer(deltaTime));
 }, 50);

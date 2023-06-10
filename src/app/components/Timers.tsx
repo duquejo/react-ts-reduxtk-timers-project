@@ -11,7 +11,7 @@ import {
 import { Bar } from './Bar';
 import { selectGold } from '../slices/gold';
 
-export const Timers: FC<any> = () => {
+export const Timers: FC = () => {
 	const defaultValue = 10000;
 	const [timeInput, setTimeInput] = useState<number>(defaultValue);
 

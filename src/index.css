@@ -16,13 +16,12 @@
 }
 
 @layer components {
-	
 	/** Gold **/
 	.gold__span {
-		@apply rounded font-bold px-4 py-2 bg-slate-700 text-xl mx-3 last:mr-0 text-white/80;
+		@apply rounded font-bold px-4 py-2 bg-slate-700 text-xl mx-3 last:mr-0 text-white/80 first:before:content-['$'] first:before:mr-2 first:before:text-white/50;
 	}
 
-	.gold__block{
+	.gold__block {
 		@apply block mt-5 text-base;
 	}
 
@@ -44,14 +43,14 @@
 		@apply mx-auto;
 	}
 
-	.timers__new-timer{
+	.timers__new-timer {
 		@apply flex flex-row justify-center;
 		button {
 			@apply ml-2;
 		}
 		.input__container {
 			@apply flex drop-shadow-md;
-			input{
+			input {
 				@apply rounded-tl rounded-bl text-slate-900 pl-2;
 			}
 			.caret {

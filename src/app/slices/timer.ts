@@ -10,8 +10,6 @@ export interface ITimerState {
 	bonus: number;
 }
 
-interface PartialTimerState extends Partial<ITimerState> {}
-
 const initialState: Array<ITimerState> = [];
 
 export const timerSlice = createSlice({
@@ -19,8 +17,8 @@ export const timerSlice = createSlice({
 	initialState,
 	reducers: {
 		addTimer: (
-			state: Array<PartialTimerState>,
-			action: PayloadAction<PartialTimerState>
+			state: Array<Partial<ITimerState>>,
+			action: PayloadAction<Partial<ITimerState>>
 		) => {
 			state.push({
 				...action.payload,
@@ -62,7 +60,7 @@ export const timerSlice = createSlice({
 		updateTimer: (state: Array<ITimerState>, action: PayloadAction<number>) => {
 			const deltaTime = action.payload;
 			return state.map((timer: ITimerState) => {
-				if (!!timer.isRunning) {
+				if (timer.isRunning) {
 					const t = timer.time - deltaTime;
 					return {
 						...timer,
@@ -82,31 +80,33 @@ export const { addTimer, toggleTimer, deleteTimer, resetTimer, updateTimer } =
 export const selectTimer = (state: RootState): Array<ITimerState> =>
 	state.timer;
 
+export const incrementWithActiveConditionv1 =
+	(index: number): AppThunk =>
+	(dispatch, getState) => {
+		const timers = selectTimer(getState());
 
-export const incrementWithActiveConditionv1 = (index: number): AppThunk => (dispatch, getState) => {
-	const timers = selectTimer(getState());
+		if (timers.length > 0) {
+			timers.forEach(({ isRunning }: ITimerState) => {
+				if (isRunning) {
+					dispatch(increment(1));
+				}
+			});
+		}
 
-	if( timers.length > 0 ) {
-		timers.forEach((timer: ITimerState) => {
-			if( !! timer.isRunning ) {
-				dispatch(increment(1));
-			}
-		});
-	}
+		dispatch(updateTimer(index));
+	};
 
-	dispatch(updateTimer(index));
-};
+export const incrementWithActiveCondition =
+	(): AppThunk => (dispatch, getState) => {
+		const timers = selectTimer(getState());
 
-export const incrementWithActiveCondition = (index: number): AppThunk => (dispatch, getState) => {
-	const timers = selectTimer(getState());
-
-	if( timers.length > 0 ) {
-		timers.forEach((timer: ITimerState) => {
-			if( !! timer.isRunning ) {
-				dispatch(increment(timer.bonus));
-			}
-		});
-	}
-};
+		if (timers.length > 0) {
+			timers.forEach(({ bonus, isRunning }: ITimerState) => {
+				if (isRunning) {
+					dispatch(increment(bonus));
+				}
+			});
+		}
+	};
 
 export default timerSlice.reducer;

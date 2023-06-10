@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAppSelector } from '../hooks/hooks';
 import { selectGold } from '../slices/gold';
+import { formatGold } from '../utils/progressUtils';
 
 export const Gold = () => {
 	const { total, multiplier } = useAppSelector(selectGold);
@@ -8,8 +9,8 @@ export const Gold = () => {
 		<h2 className="gold__title">
 			Gold earned
 			<div className="gold__block">
-				Total: <span className="gold__span">{total}</span>
-				Multiplier: <span className="gold__span">{multiplier}</span>
+				Total: <span className="gold__span">{formatGold(total)}</span>
+				Multiplier: <span className="gold__span">{multiplier}x</span>
 			</div>
 		</h2>
 	);
