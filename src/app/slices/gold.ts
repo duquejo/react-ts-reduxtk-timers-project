@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../store/store';
+import { RootState, AppThunk } from '../store/store';
+import { IToolsState, selectTools, update } from './tools';
 
 export interface IGoldState {
 	total: number;
@@ -27,12 +28,6 @@ export const goldSlice = createSlice({
 			action: PayloadAction<{ cost: number; multiplier: number }>
 		) => {
 			const { cost, multiplier } = action.payload;
-
-			if (state.total < cost) {
-				alert("You don't have enough money");
-				return state;
-			}
-
 			return {
 				...state,
 				total: state.total - cost,
@@ -42,8 +37,29 @@ export const goldSlice = createSlice({
 	},
 });
 
-export const { increment, upgrade } = goldSlice.actions;
-
 export const selectGold = (state: RootState): IGoldState => state.gold;
 
+export const upgradeBroughtItem = (index: number): AppThunk => (dispatch, getState) => {
+	const tools = selectTools(getState());
+	const { total } = selectGold(getState());
+
+	if ( tools[index] ) {
+
+		if ( total < tools[index].cost ) {
+			alert("You don't have enough money");
+			return;
+		}
+
+		dispatch(upgrade({
+			cost: tools[index].cost,
+			multiplier: tools[index].profit
+		}));
+		dispatch(update({
+			index,
+			quantity: 1
+		}));
+	}
+};
+
+export const { increment, upgrade } = goldSlice.actions;
 export default goldSlice.reducer;

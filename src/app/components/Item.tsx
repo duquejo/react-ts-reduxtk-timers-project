@@ -1,15 +1,17 @@
 import React, { FC } from 'react';
 import { useAppDispatch } from '../hooks/hooks';
-import { upgrade } from '../slices/gold';
+import { upgradeBroughtItem } from '../slices/gold';
 import { formatGold } from '../utils/progressUtils';
 
 interface IItemProps {
+	index: number;
 	name: string;
 	profit: number;
 	cost: number;
 }
 
 export const Item: FC<IItemProps> = ({
+	index,
 	name,
 	profit,
 	cost = 0,
@@ -17,12 +19,7 @@ export const Item: FC<IItemProps> = ({
 	const dispatch = useAppDispatch();
 
 	const handleOnClickBuy = () => {
-		dispatch(
-			upgrade({
-				cost,
-				multiplier: profit,
-			})
-		);
+		dispatch(upgradeBroughtItem(index));
 	};
 
 	return (

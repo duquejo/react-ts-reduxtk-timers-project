@@ -5,12 +5,14 @@ import timerReducer, {
 } from '../slices/timer';
 import goldReducer, { increment } from '../slices/gold';
 import counterReducer from '../slices/counter';
+import toolsReducer from '../slices/tools';
 
 export const store = configureStore({
 	reducer: {
 		counter: counterReducer,
 		timer: timerReducer,
 		gold: goldReducer,
+		tool: toolsReducer,
 	},
 });
 

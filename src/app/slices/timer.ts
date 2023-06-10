@@ -74,27 +74,8 @@ export const timerSlice = createSlice({
 	},
 });
 
-export const { addTimer, toggleTimer, deleteTimer, resetTimer, updateTimer } =
-	timerSlice.actions;
-
 export const selectTimer = (state: RootState): Array<ITimerState> =>
 	state.timer;
-
-export const incrementWithActiveConditionv1 =
-	(index: number): AppThunk =>
-	(dispatch, getState) => {
-		const timers = selectTimer(getState());
-
-		if (timers.length > 0) {
-			timers.forEach(({ isRunning }: ITimerState) => {
-				if (isRunning) {
-					dispatch(increment(1));
-				}
-			});
-		}
-
-		dispatch(updateTimer(index));
-	};
 
 export const incrementWithActiveCondition =
 	(): AppThunk => (dispatch, getState) => {
@@ -109,4 +90,5 @@ export const incrementWithActiveCondition =
 		}
 	};
 
+export const { addTimer, toggleTimer, deleteTimer, resetTimer, updateTimer } = timerSlice.actions;
 export default timerSlice.reducer;

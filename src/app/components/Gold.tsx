@@ -10,7 +10,7 @@ export const Gold = () => {
 			Gold earned
 			<div className="gold__block">
 				Total: <span className="gold__span">{formatGold(total)}</span>
-				Multiplier: <span className="gold__span">{multiplier}x</span>
+				Multiplier: <span className="gold__span">{multiplier}</span>
 			</div>
 		</h2>
 	);
