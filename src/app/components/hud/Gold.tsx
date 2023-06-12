@@ -1,7 +1,7 @@
 import React from 'react';
-import { useAppSelector } from '../hooks/hooks';
-import { selectGold } from '../slices/gold';
-import { formatGold } from '../utils/progressUtils';
+import { useAppSelector } from '../../hooks/hooks';
+import { selectGold } from '../../slices/gold';
+import { formatGold } from '../../utils/progressUtils';
 
 export const Gold = () => {
 	const { total, multiplier } = useAppSelector(selectGold);

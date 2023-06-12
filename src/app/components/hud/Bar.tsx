@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import { useAppSelector } from '../hooks/hooks';
-import { ITimerState, selectTimer } from '../slices/timer';
-import { formatTime, progressBarCalculation } from '../utils/progressUtils';
+import { useAppSelector } from '../../hooks/hooks';
+import { ITimerState, selectTimer } from '../../slices/timer';
+import { formatTime, progressBarCalculation } from '../../utils/progressUtils';
 
 export const Bar: FC = () => {
 	const timers = useAppSelector(selectTimer);

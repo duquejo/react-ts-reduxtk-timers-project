@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FC, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import {
 	ITimerState,
 	addTimer,
@@ -7,9 +7,9 @@ import {
 	resetTimer,
 	selectTimer,
 	toggleTimer,
-} from '../slices/timer';
+} from '../../slices/timer';
 import { Bar } from './Bar';
-import { selectGold } from '../slices/gold';
+import { selectGold } from '../../slices/gold';
 
 export const Timers: FC = () => {
 	const defaultValue = 10000;

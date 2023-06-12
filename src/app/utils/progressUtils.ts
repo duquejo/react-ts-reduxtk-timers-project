@@ -10,8 +10,14 @@ export const formatTime = (time: number): string => {
 	return `${secs}.${ms}s`;
 };
 
-export const formatGold = (number: number, precisionForce: boolean = false ): string => {
-	const equivalencies = [
+interface IFormatGold {
+	suffix: string;
+	threshold: number;
+	precision: 1 | 0;
+}
+
+export const formatGold = (number: number, precisionForce = false): string => {
+	const equivalencies: Array<IFormatGold> = [
 		{ suffix: 'T', threshold: 1e12, precision: 1 },
 		{ suffix: 'B', threshold: 1e9, precision: 1 },
 		{ suffix: 'M', threshold: 1e6, precision: 1 },
@@ -19,10 +25,14 @@ export const formatGold = (number: number, precisionForce: boolean = false ): st
 		{ suffix: '', threshold: 1, precision: 0 },
 	];
 
-	const found = equivalencies.find((x: any) => Math.abs(number) >= x.threshold );
-	if( found ) {
-		const fraction = ( number / found.threshold );
-		return ( number / found.threshold ).toFixed( ! precisionForce ? found.precision : undefined ) + found.suffix;
+	const found = equivalencies.find(
+		(x: IFormatGold) => Math.abs(number) >= x.threshold
+	);
+	if (found) {
+		const fraction = number / found.threshold;
+		return (
+			fraction.toFixed(!precisionForce ? found.precision : 1) + found.suffix
+		);
 	}
 	return number.toString();
 };

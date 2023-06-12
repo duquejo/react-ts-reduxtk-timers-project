@@ -9,7 +9,6 @@
 	h2 {
 		@apply text-2xl font-normal mb-2;
 	}
-
 	button {
 		@apply px-3 py-2 mx-1 transition-colors duration-300 bg-slate-900 hover:bg-slate-700 rounded text-xs font-semibold first:ml-0 last:mr-0 drop-shadow-lg;
 	}
@@ -25,18 +24,25 @@
 		@apply block mt-5 text-base;
 	}
 
-	.gold__title {
-		@apply text-center;
-	}
-
 	/** Item **/
-	.item__span {
-		@apply block;
+
+	.single-item {
+		@apply inline-flex items-stretch bg-slate-700 rounded-tl rounded-bl drop-shadow-lg;
+		&__quantity {
+			@apply mx-4 self-center text-center font-bold;
+		}
+		&__button {
+			@apply rounded-tl-none rounded-bl-none rounded-tr rounded-br drop-shadow-none w-full m-0;
+			span {
+				@apply block;
+			}
+		}
 	}
 
 	/** Timers **/
-	.timers__title {
-		@apply mb-4;
+	.timers__title,
+	.gold__title {
+		@apply mb-4 text-center font-semibold;
 	}
 
 	.timers__block {
@@ -81,7 +87,7 @@
 
 	/** Bar **/
 	.bar__block-outer {
-		@apply w-full bg-gray-200 rounded-full dark:bg-gray-700 first:mt-0 my-2 last:mb-0;
+		@apply w-full  rounded-full bg-gray-700 first:mt-0 my-2 last:mb-0;
 	}
 
 	.bar__block-inner {

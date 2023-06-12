@@ -90,5 +90,6 @@ export const incrementWithActiveCondition =
 		}
 	};
 
-export const { addTimer, toggleTimer, deleteTimer, resetTimer, updateTimer } = timerSlice.actions;
+export const { addTimer, toggleTimer, deleteTimer, resetTimer, updateTimer } =
+	timerSlice.actions;
 export default timerSlice.reducer;
