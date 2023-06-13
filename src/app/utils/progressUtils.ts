@@ -1,13 +1,22 @@
 import { ITimerState } from '../slices/timer';
+import { IPersonalState } from '../slices/tools';
 
 export const progressBarCalculation = ({ time, base }: ITimerState): number => {
 	return base > 0 ? (time * 100) / base : 0;
 };
 
-export const formatTime = (time: number): string => {
-	const ms = Math.round(time / 100) % 10;
-	const secs = Math.floor(time / 1000) % 60;
-	return `${secs}.${ms}s`;
+export const formatTime = (ms: number) => {
+	if (ms < 0) ms = -ms;
+	const time = {
+		d: Math.floor(ms / 86400000),
+		h: Math.floor(ms / 3600000) % 24,
+		m: Math.floor(ms / 60000) % 60,
+		s: Math.floor(ms / 1000) % 60,
+	};
+	return Object.entries(time)
+		.filter((val) => val[1] !== 0)
+		.map((val) => val[1] + '' + val[0])
+		.join('');
 };
 
 interface IFormatGold {
@@ -36,3 +45,7 @@ export const formatGold = (number: number, precisionForce = false): string => {
 	}
 	return number.toString();
 };
+
+export const activeEmployeesCheck = (
+	employees: Array<IPersonalState>
+): boolean => employees.some((p: IPersonalState) => p.quantity > 0);
