@@ -92,11 +92,11 @@
 
 	/** Character **/
 	.character {
-		@apply absolute transform -translate-x-1/2 z-20 flex cursor-pointer transition-opacity duration-200;
+		@apply cursor-pointer transition-opacity duration-200 z-10 absolute transform w-1/6;
 		&__info {
-			@apply bg-slate-900 p-3 rounded drop-shadow invisible transition-opacity opacity-0 peer-hover:opacity-100 peer-hover:visible text-xs z-30 w-full absolute -left-0 -top-2 -translate-y-full after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray-900;
+			@apply bg-slate-900 px-2 py-3 w-full rounded drop-shadow invisible transition-opacity opacity-0 peer-hover:opacity-100 peer-hover:visible text-xs z-30 absolute -left-0 -top-2 -translate-y-full after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray-900;
 			span {
-				@apply block;
+				@apply block first:font-bold first:border-b first:mb-1;
 			}
 		}
 	}

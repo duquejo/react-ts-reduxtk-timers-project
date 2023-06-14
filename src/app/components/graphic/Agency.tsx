@@ -32,20 +32,18 @@ export const Agency = () => {
 	}, [ppl]);
 
 	return (
-		<div className="w-full h-full">
+		<div className="relative w-full max-w-full h-auto flex flex-col">
+			{showPpl &&
+				ppl.map((p: IPersonalState, i: number) => {
+					if (p.quantity == 0) return;
+					return <Character key={`character-${i}`} {...p} role={p.name} />;
+				})}
 			<LazyLoadImage
 				effect="blur"
 				src={officeImg}
 				alt="Office"
 				afterLoad={handleOnLoad}
 			/>
-			{showPpl &&
-				ppl.map((p: IPersonalState, i: number) => {
-					if (p.quantity > 0) {
-						return <Character key={`character-${i}`} {...p} role={p.name} />;
-					}
-					return;
-				})}
 		</div>
 	);
 };
