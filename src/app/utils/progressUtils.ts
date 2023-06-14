@@ -49,3 +49,29 @@ export const formatGold = (number: number, precisionForce = false): string => {
 export const activeEmployeesCheck = (
 	employees: Array<IPersonalState>
 ): boolean => employees.some((p: IPersonalState) => p.quantity > 0);
+
+
+export const loadState = (): Object | undefined => {
+	try {
+		let serializedState = localStorage.getItem('IdleWorkers');
+		return serializedState === null
+			? undefined
+			: JSON.parse(serializedState);
+	} catch (error) {
+		return undefined;
+	}
+};
+
+/**
+ * The function saves the state object to local storage as a serialized JSON string.
+ * @param {any} state - The state parameter is of type "any", which means it can be any data type. In
+ * this case, it is the state object that needs to be saved to the local storage.
+ */
+export const saveState = (state: any): void => {
+	try {
+		const serializedState = JSON.stringify(state);
+		localStorage.setItem('IdleWorkers', serializedState);
+	} catch (error) {
+		console.error('Error saving data');
+	}
+};

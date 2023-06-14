@@ -6,6 +6,8 @@ import timerReducer, {
 import goldReducer, { increment } from '../slices/gold';
 import counterReducer from '../slices/counter';
 import toolsReducer from '../slices/tools';
+import throttle from 'lodash/throttle';
+import { loadState, saveState } from '../utils/progressUtils';
 
 export const store = configureStore({
 	reducer: {
@@ -14,7 +16,14 @@ export const store = configureStore({
 		gold: goldReducer,
 		tool: toolsReducer,
 	},
+	preloadedState: loadState()
 });
+
+store.subscribe(
+	throttle(() => {
+		saveState(store.getState());
+	}, 1500)
+);
 
 const base = 1;
 
