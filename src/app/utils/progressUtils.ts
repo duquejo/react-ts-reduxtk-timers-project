@@ -1,5 +1,8 @@
+import { ReducersMapObject } from '@reduxjs/toolkit';
 import { ITimerState } from '../slices/timer';
-import { IPersonalState } from '../slices/tools';
+import { IEmployeeState } from '../slices/employee';
+import { CONSTANTS, FORMAT_SUFFIXES } from './constants';
+import { RootState } from '../store/store';
 
 export const progressBarCalculation = ({ time, base }: ITimerState): number => {
 	return base > 0 ? (time * 100) / base : 0;
@@ -27,10 +30,14 @@ interface IFormatGold {
 
 export const formatGold = (number: number, precisionForce = false): string => {
 	const equivalencies: Array<IFormatGold> = [
-		{ suffix: 'T', threshold: 1e12, precision: 1 },
-		{ suffix: 'B', threshold: 1e9, precision: 1 },
-		{ suffix: 'M', threshold: 1e6, precision: 1 },
-		{ suffix: 'K', threshold: 1e3, precision: 1 },
+		{ suffix: FORMAT_SUFFIXES.SEPTILLION, threshold: 1e24, precision: 1 },
+		{ suffix: FORMAT_SUFFIXES.SEXTILLION, threshold: 1e21, precision: 1 },
+		{ suffix: FORMAT_SUFFIXES.QUINTILLION, threshold: 1e18, precision: 1 },
+		{ suffix: FORMAT_SUFFIXES.QUADRILLION, threshold: 1e15, precision: 1 },
+		{ suffix: FORMAT_SUFFIXES.TRILLION, threshold: 1e12, precision: 1 },
+		{ suffix: FORMAT_SUFFIXES.BILLION, threshold: 1e9, precision: 1 },
+		{ suffix: FORMAT_SUFFIXES.MILLION, threshold: 1e6, precision: 1 },
+		{ suffix: FORMAT_SUFFIXES.THOUSAND, threshold: 1e3, precision: 1 },
 		{ suffix: '', threshold: 1, precision: 0 },
 	];
 
@@ -47,17 +54,15 @@ export const formatGold = (number: number, precisionForce = false): string => {
 };
 
 export const activeEmployeesCheck = (
-	employees: Array<IPersonalState>
-): boolean => employees.some((p: IPersonalState) => p.quantity > 0);
+	employees: Array<IEmployeeState>
+): boolean => employees.some((p: IEmployeeState) => p.quantity > 0);
 
-
-export const loadState = (): Object | undefined => {
+export const loadState = (): ReducersMapObject | undefined => {
 	try {
-		let serializedState = localStorage.getItem('IdleWorkers');
-		return serializedState === null
-			? undefined
-			: JSON.parse(serializedState);
+		const serializedState = localStorage.getItem(CONSTANTS.GAME_STATE_NAME);
+		return serializedState === null ? undefined : JSON.parse(serializedState);
 	} catch (error) {
+		console.error('Error loading data');
 		return undefined;
 	}
 };
@@ -67,11 +72,20 @@ export const loadState = (): Object | undefined => {
  * @param {any} state - The state parameter is of type "any", which means it can be any data type. In
  * this case, it is the state object that needs to be saved to the local storage.
  */
-export const saveState = (state: any): void => {
+export const saveState = (state: RootState): void => {
 	try {
 		const serializedState = JSON.stringify(state);
-		localStorage.setItem('IdleWorkers', serializedState);
+		localStorage.setItem(CONSTANTS.GAME_STATE_NAME, serializedState);
 	} catch (error) {
 		console.error('Error saving data');
+	}
+};
+
+export const clearState = (): void => {
+	try {
+		localStorage.clear();
+		window.location.reload();
+	} catch (error) {
+		console.error('Error cleaning data');
 	}
 };

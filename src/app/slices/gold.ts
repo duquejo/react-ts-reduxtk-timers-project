@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../store/store';
-import { selectTools, update } from './tools';
+import { selectEmployees, update } from './employee';
+import { CONSTANTS, SLICE_NAMES } from '../utils/constants';
 
 export interface IGoldState {
 	total: number;
@@ -8,12 +9,12 @@ export interface IGoldState {
 }
 
 const initialState: IGoldState = {
-	total: 1,
-	multiplier: 0,
+	total: CONSTANTS.GOLD_INITIAL_VALUE,
+	multiplier: CONSTANTS.GOLD_INITIAL_MULTIPLIER,
 };
 
 export const goldSlice = createSlice({
-	name: 'gold',
+	name: SLICE_NAMES.GOLD,
 	initialState,
 	reducers: {
 		increment: (state: IGoldState, action: PayloadAction<number>) => {
@@ -39,15 +40,15 @@ export const goldSlice = createSlice({
 
 export const selectGold = (state: RootState): IGoldState => state.gold;
 
-export const upgradeBroughtItem =
+export const upgradeBroughtEmployee =
 	(index: number): AppThunk =>
 	(dispatch, getState) => {
-		const tools = selectTools(getState());
+		const employees = selectEmployees(getState());
 		const { total } = selectGold(getState());
 
-		if (tools[index]) {
-			if (total < tools[index].cost) {
-				alert("You don't have enough money");
+		if (employees[index]) {
+			if (total < employees[index].cost) {
+				alert(CONSTANTS.HUD_NO_ENOUGH_MONEY);
 				return;
 			}
 			/**
@@ -55,17 +56,17 @@ export const upgradeBroughtItem =
 			 */
 			dispatch(
 				upgrade({
-					cost: tools[index].cost,
-					multiplier: tools[index].profit,
+					cost: employees[index].cost,
+					multiplier: employees[index].profit,
 				})
 			);
 			/**
-			 * Global selected tool updation.
+			 * Global selected employee updation.
 			 */
 			dispatch(
 				update({
 					index,
-					quantity: 1,
+					quantity: CONSTANTS.EMPLOYEE_INCREASE_VALUE,
 				})
 			);
 		}

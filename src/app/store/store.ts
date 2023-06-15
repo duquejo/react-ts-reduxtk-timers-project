@@ -5,27 +5,26 @@ import timerReducer, {
 } from '../slices/timer';
 import goldReducer, { increment } from '../slices/gold';
 import counterReducer from '../slices/counter';
-import toolsReducer from '../slices/tools';
+import employeesReducer from '../slices/employee';
 import throttle from 'lodash/throttle';
 import { loadState, saveState } from '../utils/progressUtils';
+import { CONSTANTS } from '../utils/constants';
 
 export const store = configureStore({
 	reducer: {
 		counter: counterReducer,
 		timer: timerReducer,
 		gold: goldReducer,
-		tool: toolsReducer,
+		employee: employeesReducer,
 	},
-	preloadedState: loadState()
+	preloadedState: loadState(),
 });
 
 store.subscribe(
 	throttle(() => {
 		saveState(store.getState());
-	}, 1500)
+	}, CONSTANTS.STORE_PERSISTENCY_TIMER)
 );
-
-const base = 1;
 
 let lastUpdatedTime = Date.now();
 setInterval(() => {
@@ -33,12 +32,12 @@ setInterval(() => {
 	const deltaTime = now - lastUpdatedTime;
 	lastUpdatedTime = now;
 	// Gold per Second
-	store.dispatch(increment(base));
+	store.dispatch(increment(CONSTANTS.GOLD_PER_SECOND));
 	// Bonus handling
 	store.dispatch(incrementWithActiveCondition());
 	// Time handlers
 	store.dispatch(updateTimer(deltaTime));
-}, 50);
+}, CONSTANTS.GOLD_RENEWAL_TIMER);
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

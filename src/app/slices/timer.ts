@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../store/store';
 import { increment } from './gold';
+import { SLICE_NAMES } from '../utils/constants';
 
 export interface ITimerState {
 	time: number;
@@ -13,7 +14,7 @@ export interface ITimerState {
 const initialState: Array<ITimerState> = [];
 
 export const timerSlice = createSlice({
-	name: 'timer',
+	name: SLICE_NAMES.TIMER,
 	initialState,
 	reducers: {
 		addTimer: (

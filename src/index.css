@@ -8,7 +8,7 @@
 		@apply text-2xl font-normal mb-2;
 	}
 	button {
-		@apply px-3 py-2 mx-1 transition-colors duration-300 bg-slate-900 hover:bg-slate-700 rounded text-xs font-semibold first:ml-0 last:mr-0 drop-shadow-lg;
+		@apply px-3 py-2 transition-colors duration-300 bg-slate-900 hover:bg-slate-700 rounded text-xs font-semibold drop-shadow-lg;
 	}
 }
 
@@ -16,25 +16,26 @@
 
 @layer components {
 	/** Gold **/
-	.gold__span {
-		@apply rounded font-bold px-4 py-2 bg-slate-700 text-xl mx-3 last:mr-0 text-white/80 first:before:content-['$'] first:before:mr-2 first:before:text-white/60;
-	}
-	.gold__block {
-		@apply block mt-5 text-base;
-	}
-	.gold__title {
+
+	.gold {
 		@apply mb-4 text-center font-semibold;
+		&__span {
+			@apply rounded font-bold px-4 py-2 bg-slate-700 text-xl mx-3 last:mr-0 text-white/80 first:before:content-['$'] first:before:mr-2 first:before:text-white/60;
+		}
+		&__block {
+			@apply block mt-5 text-base;
+		}
 	}
 
 	/** Item **/
 
 	.single-item {
-		@apply inline-flex items-stretch bg-slate-700 rounded-tl rounded-bl drop-shadow-lg;
+		@apply flex items-stretch bg-slate-700 rounded drop-shadow-lg;
 		&__quantity {
-			@apply mx-4 self-center text-center font-bold;
+			@apply self-center font-bold w-16 text-center;
 		}
 		&__button {
-			@apply rounded-tl-none rounded-bl-none rounded-tr rounded-br drop-shadow-none w-full m-0;
+			@apply rounded-tl-none rounded-bl-none drop-shadow-none w-full m-0 px-1;
 			span {
 				@apply block;
 			}
@@ -71,6 +72,9 @@
 				span {
 					@apply mr-1 text-base font-semibold;
 				}
+				button {
+					@apply mx-1 first:ml-0 last:mr-0;
+				}
 			}
 		}
 		&__debugger {
@@ -92,9 +96,12 @@
 
 	/** Character **/
 	.character {
-		@apply cursor-pointer transition-opacity duration-200 z-10 absolute transform w-1/6;
+		@apply cursor-pointer transition-opacity duration-200 absolute transform w-1/6 z-10;
+		&__img {
+			@apply relative z-10;
+		}
 		&__info {
-			@apply bg-slate-900 px-2 py-3 w-full rounded drop-shadow invisible transition-opacity opacity-0 peer-hover:opacity-100 peer-hover:visible text-xs z-30 absolute -left-0 -top-2 -translate-y-full after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray-900;
+			@apply bg-slate-900 px-2 py-3 w-32 rounded drop-shadow invisible transition-opacity opacity-0 group-hover:opacity-100 group-hover:visible text-xs absolute -left-0 -top-2 -translate-y-full after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray-900 z-30;
 			span {
 				@apply block first:font-bold first:border-b first:mb-1;
 			}

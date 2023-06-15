@@ -6,7 +6,7 @@ import { formatGold } from '../../utils/progressUtils';
 export const Gold = () => {
 	const { total, multiplier } = useAppSelector(selectGold);
 	return (
-		<h2 className="gold__title">
+		<h2 className="gold">
 			Gold earned
 			<div className="gold__block">
 				Total: <span className="gold__span">{formatGold(total)}</span>

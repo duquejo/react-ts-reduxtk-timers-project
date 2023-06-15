@@ -22,9 +22,8 @@ export const NewTimer: FC = () => {
 		);
 	};
 
-	const handleOnChange = (e: ChangeEvent<HTMLInputElement>): void => {
+	const handleOnChange = (e: ChangeEvent<HTMLInputElement>): void =>
 		setTimeInput(parseInt(e.target.value));
-	};
 
 	return (
 		<>
