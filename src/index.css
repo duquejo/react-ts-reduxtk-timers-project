@@ -2,28 +2,46 @@
 
 @layer base {
 	h1 {
-		@apply text-4xl font-semibold mb-2;
+		@apply text-lg sm:text-2xl font-semibold;
 	}
 	h2 {
-		@apply text-2xl font-normal mb-2;
+		@apply text-base font-normal;
 	}
 	button {
-		@apply px-3 py-2 transition-colors duration-300 bg-slate-900 hover:bg-slate-700 rounded text-xs font-semibold drop-shadow-lg;
+		@apply px-3 py-2 transition-colors duration-300 bg-slate-900/80 hover:bg-slate-700/90 rounded text-xs font-semibold drop-shadow-lg;
 	}
 }
 
 @tailwind components;
 
 @layer components {
-	/** Gold **/
+	/** App **/
+	.app {
+		@apply h-screen bg-slate-500 text-white p-2 sm:p-2 md:p-6 lg:p-8;
+		&__timers {
+			@apply absolute top-1 left-0 w-full sm:top-5 sm:left-5 sm:w-1/4 z-20;
+		}
+		&__agency {
+			@apply absolute p-3 w-full transform top-1/4 -translate-y-1/4 left-1/2 -translate-x-1/2 z-10 md:w-auto md:top-1/2 md:-translate-y-1/2 md:p-0 sm:w-auto;
+		}
+		&__hud {
+			@apply flex flex-col sm:flex-row sm:items-end justify-between h-full;
+			.employees {
+				@apply flex flex-col gap-1 sm:gap-1 md:gap-2 z-10
+			}
+		}
+	}
 
+	/** Gold **/
 	.gold {
-		@apply mb-4 text-center font-semibold;
+		h1 {
+			@apply sm:text-left text-center;
+		}
 		&__span {
-			@apply rounded font-bold px-4 py-2 bg-slate-700 text-xl mx-3 last:mr-0 text-white/80 first:before:content-['$'] first:before:mr-2 first:before:text-white/60;
+			@apply rounded font-bold px-2 sm:px-4 py-1 sm:py-2 bg-slate-700/90 sm:text-xl mx-3 last:mr-0 text-white/80 first:before:content-['$'] first:before:mr-2 first:before:text-white/60 inline-flex;
 		}
 		&__block {
-			@apply block mt-5 text-base;
+			@apply block md:mt-5 mt-2 text-center sm:text-left text-base;
 		}
 	}
 
@@ -32,19 +50,19 @@
 	.single-item {
 		@apply flex items-stretch bg-slate-700 rounded drop-shadow-lg;
 		&__quantity {
-			@apply self-center font-bold w-16 text-center;
+			@apply self-center font-bold w-12 md:w-16 text-center;
 		}
 		&__button {
-			@apply rounded-tl-none rounded-bl-none drop-shadow-none w-full m-0 px-1;
+			@apply rounded-tl-none rounded-bl-none drop-shadow-none w-full m-0 sm:px-1;
 			span {
-				@apply block;
+				@apply ml-1 sm:ml-auto sm:block;
 			}
 		}
 	}
 
 	/** Timers **/
 	.timers {
-		@apply mx-auto;
+		@apply mx-3;
 		&__title {
 			@apply mb-4 text-center font-semibold;
 		}
@@ -101,7 +119,7 @@
 			@apply relative z-10;
 		}
 		&__info {
-			@apply bg-slate-900 px-2 py-3 w-32 rounded drop-shadow invisible transition-opacity opacity-0 group-hover:opacity-100 group-hover:visible text-xs absolute -left-0 -top-2 -translate-y-full after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray-900 z-30;
+			@apply bg-slate-900 px-2 py-2 sm:py-3 w-28 sm:w-32 rounded drop-shadow invisible transition-opacity opacity-0 group-hover:opacity-100 group-hover:visible text-xs absolute -left-0 -top-2 -translate-y-full after:content-[''] after:absolute after:left-1/4 after:top-full after:-translate-x-1/4 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray-900 z-30;
 			span {
 				@apply block first:font-bold first:border-b first:mb-1;
 			}

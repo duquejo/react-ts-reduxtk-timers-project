@@ -12,7 +12,6 @@ export const Timers: FC = () => {
 
 	return (
 		<div className="timers">
-			<h1 className="timers__title">Bonus timers</h1>
 			{timers.length > 0 && (
 				<div className="timers__debugger">
 					<code>{JSON.stringify({ timers, gold }, null, 4)}</code>
