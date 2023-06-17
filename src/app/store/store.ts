@@ -6,6 +6,7 @@ import timerReducer, {
 import goldReducer, { increment } from '../slices/gold';
 import counterReducer from '../slices/counter';
 import employeesReducer from '../slices/employee';
+import hudReducer from '../slices/hud';
 import throttle from 'lodash/throttle';
 import { loadState, saveState } from '../utils/progressUtils';
 import { CONSTANTS } from '../utils/constants';
@@ -16,6 +17,7 @@ export const store = configureStore({
 		timer: timerReducer,
 		gold: goldReducer,
 		employee: employeesReducer,
+		hud: hudReducer,
 	},
 	preloadedState: loadState(),
 });

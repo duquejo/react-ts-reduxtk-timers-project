@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../store/store';
 import { selectEmployees, update } from './employee';
 import { CONSTANTS, SLICE_NAMES } from '../utils/constants';
+import { addMessage } from './hud';
 
 export interface IGoldState {
 	total: number;
@@ -46,9 +47,15 @@ export const upgradeBroughtEmployee =
 		const employees = selectEmployees(getState());
 		const { total } = selectGold(getState());
 
-		if (employees[index]) {
-			if (total < employees[index].cost) {
-				alert(CONSTANTS.HUD_NO_ENOUGH_MONEY);
+		const employee = employees[index];
+
+		if (employee) {
+			if (total < employee.cost) {
+				dispatch(addMessage({
+					type: 'error',
+					content: `Failed to hire ${employee.name}, ${CONSTANTS.HUD_NO_ENOUGH_MONEY}`,
+					time: Date.now(),
+				}));
 				return;
 			}
 			/**
@@ -56,8 +63,8 @@ export const upgradeBroughtEmployee =
 			 */
 			dispatch(
 				upgrade({
-					cost: employees[index].cost,
-					multiplier: employees[index].profit,
+					cost: employee.cost,
+					multiplier: employee.profit,
 				})
 			);
 			/**
@@ -67,6 +74,13 @@ export const upgradeBroughtEmployee =
 				update({
 					index,
 					quantity: CONSTANTS.EMPLOYEE_INCREASE_VALUE,
+				})
+			);
+			dispatch(
+				addMessage({
+					type: 'success',
+					content: `${employee.name} was been hired!`,
+					time: Date.now(),
 				})
 			);
 		}

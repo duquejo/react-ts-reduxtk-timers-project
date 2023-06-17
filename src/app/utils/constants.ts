@@ -27,6 +27,7 @@ export enum SLICE_NAMES {
 	GOLD = 'gold',
 	TIMER = 'timer',
 	EMPLOYEES = 'employees',
+	HUD = 'hud',
 }
 
 interface ICharacterConfig {
