@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FC, useState } from 'react';
 import { useAppDispatch } from '../../hooks/hooks';
-import { addTimer } from '../../slices/timer';
+import { addTimer, addTimerWithMessageNotification } from '../../slices/timer';
+import { addMessage } from '../../slices/hud';
 
 export const NewTimer: FC = () => {
 	const defaultValue = 10000;
@@ -13,12 +14,16 @@ export const NewTimer: FC = () => {
 
 	const handleOnClickAdd = (name: string = Date.now().toString()) => {
 		setBonus((prev) => prev * dummyBonus);
+
 		dispatch(
-			addTimer({
-				name,
-				time: timeInput,
-				bonus,
-			})
+			addTimerWithMessageNotification(
+				{
+					name,
+					time: timeInput,
+					bonus,
+				},
+				`An event: \'${name}\' has been activated!`
+			)
 		);
 	};
 

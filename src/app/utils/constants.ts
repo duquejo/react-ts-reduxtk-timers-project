@@ -23,6 +23,12 @@ export enum FORMAT_SUFFIXES {
 	NONILLION = 'No',
 }
 
+export enum BONUS_EVENTS {
+	STATICGOLD = 'STATICGOLD',
+	CPSX10 = 'New sponsorship',
+	CPSX20 = 'New award earned',
+}
+
 export enum SLICE_NAMES {
 	GOLD = 'gold',
 	TIMER = 'timer',
@@ -107,7 +113,8 @@ export const CONSTANTS = {
 	GAME_STATE_NAME: 'IdleEmployees',
 	HUD_NO_ENOUGH_MONEY: "You don't have enough money",
 	COST_INCREASE_RATE: 1.1,
-	STORE_PERSISTENCY_TIMER: 1500,
+	PERSISTENCY_TRIGGER_TIMER: 1500,
+	BONUS_TRIGGER_TIMER: 20000,
 	GOLD_RENEWAL_TIMER: 50,
 	GOLD_PER_SECOND: 1,
 	CHARACTER_CONFIG,

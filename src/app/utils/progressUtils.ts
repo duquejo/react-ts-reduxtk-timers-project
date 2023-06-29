@@ -1,8 +1,9 @@
 import { ReducersMapObject } from '@reduxjs/toolkit';
 import { ITimerState } from '../slices/timer';
 import { IEmployeeState } from '../slices/employee';
-import { CONSTANTS, FORMAT_SUFFIXES } from './constants';
+import { CONSTANTS, FORMAT_SUFFIXES, BONUS_EVENTS } from './constants';
 import { RootState } from '../store/store';
+import { IMessage } from '../slices/hud';
 
 export const progressBarCalculation = ({ time, base }: ITimerState): number => {
 	return base > 0 ? (time * 100) / base : 0;
@@ -88,4 +89,20 @@ export const clearState = (): void => {
 	} catch (error) {
 		console.error('Error cleaning data');
 	}
+};
+
+export const eventsGenerator = (): any => {
+	const randomValue = Math.floor(Math.random() * 10000 + 1);
+	if (randomValue >= 9800) {
+		return {
+			name: BONUS_EVENTS.CPSX20,
+			bonus: 20
+		};
+	} else if( randomValue >= 9000 && randomValue < 9800) {
+		return {
+			name: BONUS_EVENTS.CPSX10,
+			bonus: 10,
+		};
+	}
+	return false;
 };

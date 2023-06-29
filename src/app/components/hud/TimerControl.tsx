@@ -28,12 +28,7 @@ export const TimerControl: FC<ITimerControl> = ({
 	};
 
 	const handleOnClickReset = (time: number, index: number) => {
-		dispatch(
-			resetTimer({
-				time,
-				index,
-			})
-		);
+		dispatch(resetTimer(index));
 	};
 
 	return (

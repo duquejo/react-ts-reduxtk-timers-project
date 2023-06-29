@@ -1,6 +1,11 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { IMessage, clearMessages, selectHud } from '../../slices/hud';
+import {
+	IMessage,
+	clearMessages,
+	selectHud,
+	toggleMessages,
+} from '../../slices/hud';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 export const Messages: FC = () => {
@@ -9,14 +14,29 @@ export const Messages: FC = () => {
 	} = useAppSelector(selectHud);
 	const dispatch = useAppDispatch();
 
+	const clearRef = useRef<HTMLDivElement>(null);
+
 	const handleOnClickClear = () => dispatch(clearMessages());
 
-	useEffect(() => {}, [messages]);
+	const handleOnClickToggle = () => {
+		dispatch(toggleMessages());
+		setTimeout(() => {
+			scrollToBottom();
+		}, 100);
+	};
+
+	const scrollToBottom = () => {
+		clearRef?.current?.scrollIntoView({ behavior: 'smooth' });
+	};
+
+	useEffect(() => {
+		scrollToBottom();
+	}, [messages]);
 
 	return (
 		<>
 			<div className="messages__title">Latest messages</div>
-			<ul className="messages__list">
+			<ul className={`messages__list ${visible ? 'visible' : 'hidden'}`}>
 				{messages.length > 0 ? (
 					<>
 						{messages.map((message: IMessage) => (
@@ -26,6 +46,7 @@ export const Messages: FC = () => {
 							</li>
 						))}
 						<div
+							ref={clearRef}
 							className="messages__action clear"
 							onClick={handleOnClickClear}
 						>
@@ -36,8 +57,7 @@ export const Messages: FC = () => {
 					<p className="text-center">No messages</p>
 				)}
 			</ul>
-
-			<div className="messages__action toggle">
+			<div className="messages__action toggle" onClick={handleOnClickToggle}>
 				{visible ? 'Shrink' : 'Expand'}
 			</div>
 		</>

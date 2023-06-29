@@ -41,26 +41,16 @@ export const hudSlice = createSlice({
       isDebugModeEnabled: action.payload
     }),
     addMessage: (state: IHudState, action: PayloadAction<IMessage>) => {
-
-      /**
-       * @TODO
-       * 
-       * Refactor this logic, it must be outside in a helper function.
-       */
-      console.log( action.payload.content )
       const messages = state.latestMessages.messages;
       if( messages.length > 0 ) {
         const latestContent = (messages[messages.length - 1].content);
         const latestRepeats = latestContent.match(/\d+/);
         const isRepeated = latestContent.includes(action.payload.content);
-
-        console.log( isRepeated, latestRepeats, latestContent );
         if( isRepeated ) {
           state.latestMessages.messages[messages.length - 1].content = `${action.payload.content} (x${latestRepeats ? parseInt(latestRepeats[0])+1 : 2 })`;
           return;
         }
       }
-
       state.latestMessages.messages.push({
         ...action.payload,
         type: ! action.payload.type ? 'info' : action.payload.type
@@ -69,10 +59,13 @@ export const hudSlice = createSlice({
     clearMessages: (state: IHudState) => {
       state.latestMessages.messages = [];
     },
+    toggleMessages: (state: IHudState) => {
+      state.latestMessages.visible = ! state.latestMessages.visible;
+    },
   }
 });
 
-export const { activeModal, activeDebugMode, addMessage, clearMessages } = hudSlice.actions;
+export const { activeModal, activeDebugMode, addMessage, clearMessages, toggleMessages } = hudSlice.actions;
 
 export const selectHud = (state: RootState): IHudState => state.hud;
 

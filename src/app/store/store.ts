@@ -2,13 +2,15 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import timerReducer, {
 	incrementWithActiveCondition,
 	updateTimer,
+	addBonusEvent,
+	updateAndRemoveInactiveTimers
 } from '../slices/timer';
 import goldReducer, { increment } from '../slices/gold';
 import counterReducer from '../slices/counter';
 import employeesReducer from '../slices/employee';
 import hudReducer from '../slices/hud';
 import throttle from 'lodash/throttle';
-import { loadState, saveState } from '../utils/progressUtils';
+import { eventsGenerator, loadState, saveState } from '../utils/progressUtils';
 import { CONSTANTS } from '../utils/constants';
 
 export const store = configureStore({
@@ -22,10 +24,26 @@ export const store = configureStore({
 	preloadedState: loadState(),
 });
 
+/**
+ * Persistency trigger
+ */
 store.subscribe(
 	throttle(() => {
 		saveState(store.getState());
-	}, CONSTANTS.STORE_PERSISTENCY_TIMER)
+	}, CONSTANTS.PERSISTENCY_TRIGGER_TIMER),
+);
+
+/**
+ * Bonus events every 20s
+ */
+store.subscribe(
+	throttle(() => {
+		const event = eventsGenerator();
+		console.log( !! event );
+		if( event ) {
+			store.dispatch(addBonusEvent({ ...event }));
+		}
+	}, CONSTANTS.BONUS_TRIGGER_TIMER ),
 );
 
 let lastUpdatedTime = Date.now();
@@ -38,7 +56,7 @@ setInterval(() => {
 	// Bonus handling
 	store.dispatch(incrementWithActiveCondition());
 	// Time handlers
-	store.dispatch(updateTimer(deltaTime));
+	store.dispatch(updateAndRemoveInactiveTimers(deltaTime));
 }, CONSTANTS.GOLD_RENEWAL_TIMER);
 
 export type AppDispatch = typeof store.dispatch;

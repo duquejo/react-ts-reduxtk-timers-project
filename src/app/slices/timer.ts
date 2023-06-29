@@ -1,13 +1,19 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../store/store';
-import { increment } from './gold';
-import { SLICE_NAMES } from '../utils/constants';
+import { increment, selectGold } from './gold';
+import { SLICE_NAMES, BONUS_EVENTS } from '../utils/constants';
+import { addMessage } from './hud';
 
 export interface ITimerState {
 	time: number;
 	isRunning: boolean;
 	name: string;
 	base: number;
+	bonus: number;
+}
+
+export interface IBonusEvent {
+	name: BONUS_EVENTS;
 	bonus: number;
 }
 
@@ -45,11 +51,11 @@ export const timerSlice = createSlice({
 		},
 		resetTimer: (
 			state: Array<ITimerState>,
-			action: PayloadAction<{ time: number; index: number }>
+			action: PayloadAction<number>
 		) => {
 			const payload = action.payload;
 			return state.map((timer: ITimerState, i: number) => {
-				if (i === payload.index) {
+				if (i === payload) {
 					return {
 						...timer,
 						time: timer.base,
@@ -78,10 +84,34 @@ export const timerSlice = createSlice({
 export const selectTimer = (state: RootState): Array<ITimerState> =>
 	state.timer;
 
+export const updateAndRemoveInactiveTimers = (deltaTime: number): AppThunk => (dispatch, getState) => {
+	const timers = selectTimer(getState());
+	dispatch(updateTimer(deltaTime));
+	if (timers.length > 0) {
+		const finishedIndex = timers.findIndex(({ isRunning, time }: ITimerState) => isRunning === false && time === 0);
+		if (finishedIndex !== -1) {
+			dispatch(deleteTimer(finishedIndex));
+			dispatch(addMessage({
+				content: `An event has finished`,
+				time: Date.now(),
+			}));
+		};
+	}
+};
+
+export const addTimerWithMessageNotification = (time: Partial<ITimerState>, message: string): AppThunk => (dispatch, getState) => {
+	dispatch(addTimer({
+		...time,
+	}));
+	dispatch(addMessage({
+		content: message,
+		time: Date.now(),
+	}));
+};
+
 export const incrementWithActiveCondition =
 	(): AppThunk => (dispatch, getState) => {
 		const timers = selectTimer(getState());
-
 		if (timers.length > 0) {
 			timers.forEach(({ bonus, isRunning }: ITimerState) => {
 				if (isRunning) {
@@ -90,6 +120,37 @@ export const incrementWithActiveCondition =
 			});
 		}
 	};
+
+export const addBonusEvent = ({ name: bonusName, bonus: bonusValue }: IBonusEvent): AppThunk => (dispatch, getState) => {
+	const timers = selectTimer(getState());
+	const { multiplier } = selectGold(getState());
+
+	if( multiplier === 0 ) return;
+
+	if (timers.length > 0) {
+		const foundIndex = timers.findIndex( ({ name, isRunning }: ITimerState) => name === bonusName && isRunning === true );
+		if( foundIndex !== -1 ) {
+			console.log('restarted');
+			dispatch(resetTimer(foundIndex));
+			dispatch(addMessage({
+				content: `The event \'${ bonusName } has been restarted!`,
+				time: Date.now(),
+			}));
+			return;
+		}
+	}
+
+	dispatch(
+		addTimerWithMessageNotification(
+			{
+				name: bonusName,
+				time: 10000,
+				bonus: bonusValue,
+			},
+			`An event: \'${bonusName}\' has been activated!`
+		)
+	);
+};
 
 export const { addTimer, toggleTimer, deleteTimer, resetTimer, updateTimer } =
 	timerSlice.actions;
