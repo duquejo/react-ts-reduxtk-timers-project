@@ -12,40 +12,39 @@ export const Timers: FC = () => {
 	const gold = useAppSelector(selectGold);
 	const { isDebugModeEnabled } = useAppSelector(selectHud);
 
-	return (
-		isDebugModeEnabled && (
-			<div className="timers">
-				{timers.length > 0 && (
-					<div className="timers__debugger">
-						<code>{JSON.stringify({ timers, gold }, null, 4)}</code>
-					</div>
-				)}
-				<div className="timers__current-timers-bar">
-					{timers.length > 0 &&
-						timers.map((timer: ITimerState) => (
-							<Bar key={`timer-${timer.name}`} {...timer} />
-						))}
+	return isDebugModeEnabled ? (
+		<div className="timers">
+			{timers.length > 0 && (
+				<div className="timers__debugger">
+					<code>{JSON.stringify({ timers, gold }, null, 4)}</code>
 				</div>
-				{/* Just for debugging */}
-				<div className="timers__new-timer">
-					<NewTimer />
-				</div>
-				<div className="timers__current-timers-control">
-					{timers.length > 0 && (
-						<ul>
-							{timers.map((timer: ITimerState, index: number) => {
-								return (
-									<TimerControl
-										key={`counter-${index}`}
-										index={index}
-										{...timer}
-									/>
-								);
-							})}
-						</ul>
-					)}
-				</div>
+			)}
+			<div className="timers__current-timers-bar">
+				{timers.length > 0 &&
+					timers.map((timer: ITimerState) => (
+						<Bar key={`timer-${timer.name}`} {...timer} />
+					))}
 			</div>
-		)
+			<div className="timers__new-timer">
+				<NewTimer />
+			</div>
+			<div className="timers__current-timers-control">
+				{timers.length > 0 && (
+					<ul>
+						{timers.map((timer: ITimerState, index: number) => {
+							return (
+								<TimerControl
+									key={`counter-${index}`}
+									index={index}
+									{...timer}
+								/>
+							);
+						})}
+					</ul>
+				)}
+			</div>
+		</div>
+	) : (
+		<></>
 	);
 };

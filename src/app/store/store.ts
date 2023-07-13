@@ -1,7 +1,6 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import timerReducer, {
 	incrementWithActiveCondition,
-	updateTimer,
 	addBonusEvent,
 	updateAndRemoveInactiveTimers
 } from '../slices/timer';

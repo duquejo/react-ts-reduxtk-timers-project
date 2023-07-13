@@ -99,7 +99,7 @@ export const updateAndRemoveInactiveTimers = (deltaTime: number): AppThunk => (d
 	}
 };
 
-export const addTimerWithMessageNotification = (time: Partial<ITimerState>, message: string): AppThunk => (dispatch, getState) => {
+export const addTimerWithMessageNotification = (time: Partial<ITimerState>, message: string): AppThunk => (dispatch) => {
 	dispatch(addTimer({
 		...time,
 	}));
@@ -133,7 +133,7 @@ export const addBonusEvent = ({ name: bonusName, bonus: bonusValue }: IBonusEven
 			console.log('restarted');
 			dispatch(resetTimer(foundIndex));
 			dispatch(addMessage({
-				content: `The event \'${ bonusName } has been restarted!`,
+				content: `The event '${ bonusName }' has been restarted!`,
 				time: Date.now(),
 			}));
 			return;
@@ -147,7 +147,7 @@ export const addBonusEvent = ({ name: bonusName, bonus: bonusValue }: IBonusEven
 				time: 10000,
 				bonus: bonusValue,
 			},
-			`An event: \'${bonusName}\' has been activated!`
+			`An event: '${bonusName}' has been activated!`
 		)
 	);
 };

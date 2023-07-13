@@ -1,7 +1,6 @@
 import React, { ChangeEvent, FC, useState } from 'react';
 import { useAppDispatch } from '../../hooks/hooks';
-import { addTimer, addTimerWithMessageNotification } from '../../slices/timer';
-import { addMessage } from '../../slices/hud';
+import { addTimerWithMessageNotification } from '../../slices/timer';
 
 export const NewTimer: FC = () => {
 	const defaultValue = 10000;
@@ -22,7 +21,7 @@ export const NewTimer: FC = () => {
 					time: timeInput,
 					bonus,
 				},
-				`An event: \'${name}\' has been activated!`
+				`An event: '${name}' has been activated!`
 			)
 		);
 	};

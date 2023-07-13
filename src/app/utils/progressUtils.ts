@@ -1,9 +1,8 @@
 import { ReducersMapObject } from '@reduxjs/toolkit';
-import { ITimerState } from '../slices/timer';
+import { IBonusEvent, ITimerState } from '../slices/timer';
 import { IEmployeeState } from '../slices/employee';
 import { CONSTANTS, FORMAT_SUFFIXES, BONUS_EVENTS } from './constants';
 import { RootState } from '../store/store';
-import { IMessage } from '../slices/hud';
 
 export const progressBarCalculation = ({ time, base }: ITimerState): number => {
 	return base > 0 ? (time * 100) / base : 0;
@@ -70,7 +69,7 @@ export const loadState = (): ReducersMapObject | undefined => {
 
 /**
  * The function saves the state object to local storage as a serialized JSON string.
- * @param {any} state - The state parameter is of type "any", which means it can be any data type. In
+ * @param {RootState} state - The state parameter is of type "any", which means it can be any data type. In
  * this case, it is the state object that needs to be saved to the local storage.
  */
 export const saveState = (state: RootState): void => {
@@ -91,7 +90,7 @@ export const clearState = (): void => {
 	}
 };
 
-export const eventsGenerator = (): any => {
+export const eventsGenerator = (): IBonusEvent | false => {
 	const randomValue = Math.floor(Math.random() * 10000 + 1);
 	if (randomValue >= 9800) {
 		return {
