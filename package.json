@@ -30,7 +30,7 @@
 		"autoprefixer": "^10.4.20",
 		"cssnano": "^7.0.6",
 		"eslint": "^9.6.0",
-		"eslint-plugin-react": "^7.34.3",
+		"eslint-plugin-react": "^7.37.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-react-hooks": "^4.6.2",
 		"postcss": "^8.4.38",
